@@ -42,21 +42,34 @@ export const Overlay: React.FC<OverlayProps> = ({
   const leaderboard = getLeaderboard();
 
   const handleShare = async () => {
-    const text = `I scored ${currentScore} in Neon Serpent (${gameMode})! Can you beat me?`;
+    const text = `I scored ${currentScore} in Neon Serpent (${gameMode})! Can you beat me? ${window.location.href}`;
+    
+    // 1. Try Mobile Native Share
     if (navigator.share) {
       try {
         await navigator.share({
           title: 'Neon Serpent',
           text: text,
-          url: window.location.href
         });
+        return;
       } catch (err) {
-        console.error('Share failed', err);
+        console.log('Native share failed or dismissed', err);
       }
-    } else {
-      await navigator.clipboard.writeText(`${text} ${window.location.href}`);
-      alert('Score copied to clipboard!');
     }
+
+    // 2. Try Clipboard API
+    try {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        await navigator.clipboard.writeText(text);
+        alert('Score copied to clipboard!');
+        return;
+      }
+    } catch (err) {
+       console.log('Clipboard API failed', err);
+    }
+
+    // 3. Fallback to simple Prompt
+    prompt('Copy your result:', text);
   };
 
   if (status === GameStatus.PLAYING) {

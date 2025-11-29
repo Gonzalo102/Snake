@@ -43,6 +43,7 @@ export const GameCanvas: React.FC<GameCanvasProps> = ({
     height: 0,
     frameCount: 0,
     timeLeft: config.timeLimit || 0,
+    headXRatio: 0.25 // Default to 25%
   });
 
   const stars = useRef<Array<{x: number, y: number, size: number, speed: number}>>([]);
@@ -108,6 +109,12 @@ export const GameCanvas: React.FC<GameCanvasProps> = ({
     // Reset RNG with the config seed for this run
     rng.current = new SeededRNG(config.seed);
 
+    // Determine Head Position based on screen width
+    // Mobile (< 768px): 15% from left to give more reaction time
+    // Desktop: 25% from left
+    const isMobile = width < 768;
+    const headXRatio = isMobile ? 0.15 : 0.25;
+
     state.current = {
       snakeY: height / 2,
       velocity: 0,
@@ -121,10 +128,11 @@ export const GameCanvas: React.FC<GameCanvasProps> = ({
       width,
       height,
       frameCount: 0,
-      timeLeft: config.timeLimit || 0
+      timeLeft: config.timeLimit || 0,
+      headXRatio: headXRatio
     };
 
-    const headX = width * 0.3;
+    const headX = width * headXRatio;
     for(let i = 0; i < 20; i++) {
       state.current.trail.push({ x: headX - (i * 5), y: height / 2 });
     }
@@ -194,7 +202,7 @@ export const GameCanvas: React.FC<GameCanvasProps> = ({
     }
 
     const { width, height } = state.current;
-    const headX = width * 0.3;
+    const headX = width * state.current.headXRatio;
 
     if (status === GameStatus.PLAYING) {
       state.current.frameCount++;

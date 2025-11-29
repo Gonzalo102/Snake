@@ -9,14 +9,14 @@ export const COLORS = {
 };
 
 export const PHYSICS = {
-  GRAVITY: 0.35, // Reduced from 0.5 for smoother fall
-  LIFT: 0.8, // Upward force per frame when holding
-  JUMP_STRENGTH: -5.5, // Deprecated in favor of LIFT, kept for ref
+  GRAVITY: 0.3, // Reduced to 0.3 for floatier feel
+  LIFT: 0.5, // Reduced from 0.8 for more control
+  JUMP_STRENGTH: -5.5, 
   TERMINAL_VELOCITY: 8,
-  BASE_SPEED: 4.0,
-  SPEED_INCREMENT: 0.002, // Speed increase per frame
+  BASE_SPEED: 3.5, // Reduced from 4.0 for better reaction time
+  SPEED_INCREMENT: 0.002, 
   OBSTACLE_WIDTH: 50,
-  OBSTACLE_GAP: 170, // Slightly wider for continuous movement
+  OBSTACLE_GAP: 190, // Increased from 170 for accessibility
   OBSTACLE_SPAWN_DISTANCE: 350,
 };
 
