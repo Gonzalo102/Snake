@@ -1,0 +1,5 @@
+{
+  "name": "Neon Serpent",
+  "description": "A minimalist, high-speed 2D side-scrolling survival game where you control a neon snake line. Avoid obstacles, collect points, and compete for the high score.",
+  "requestFramePermissions": []
+}
