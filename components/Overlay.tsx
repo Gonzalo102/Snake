@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { GameStatus, GameMode } from '../types';
 import { Button } from './Button';
@@ -53,7 +54,7 @@ export const Overlay: React.FC<OverlayProps> = ({
         });
         return;
       } catch (err) {
-        console.log('Native share failed or dismissed', err);
+        // User cancelled or not supported
       }
     }
 
@@ -65,10 +66,10 @@ export const Overlay: React.FC<OverlayProps> = ({
         return;
       }
     } catch (err) {
-       console.log('Clipboard API failed', err);
+       // Failed
     }
 
-    // 3. Fallback to simple Prompt
+    // 3. Fallback to simple Prompt (Universal)
     prompt('Copy your result:', text);
   };
 
